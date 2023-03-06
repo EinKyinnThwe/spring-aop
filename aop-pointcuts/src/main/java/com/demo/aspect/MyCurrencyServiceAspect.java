@@ -76,8 +76,36 @@ public class MyCurrencyServiceAspect {
                         Arrays.toString(joinPoint.getArgs()), name)
         );
     }
-    @AfterThrowing(value = "annotationArgsPointCut()", throwing = "exception")
+    //@AfterThrowing(value = "annotationArgsPointCut()", throwing = "exception")
     public void afterThrowingAdvice(JoinPoint joinPoint, Exception exception) {
         System.out.println("Exception caught::" + exception);
+    }
+    @Pointcut("@target(com.demo.annotation.Secured)")
+    public void targetPointCut() {}
+    //@Before("targetPointCut()")
+    public void targetAnnotationAdvice(JoinPoint joinPoint) {
+        System.out.println(
+                String.format("%s is invoked before with:%s",
+                        joinPoint.getSignature().getName(),
+                        Arrays.toString(joinPoint.getArgs()))
+        );
+    }
+    @Pointcut("execution(public void com.demo.service.MyCurrencyService.changeCurrency(..))")
+    public void changeCurrencyPointCut(){}
+    //@Before("changeCurrencyPointCut()")
+    public void executionBeforeAdvice(JoinPoint joinPoint) {
+        System.out.println(
+                String.format("%s is invoked before with:%s",
+                        joinPoint.getSignature().getName(),
+                        Arrays.toString(joinPoint.getArgs()))
+        );
+    }
+    @Before("withinPointCut() && annotationArgsPointCut()")
+    public void combinationAdvice(JoinPoint joinPoint) {
+        System.out.println(
+                String.format("%s is invoked before with:%s",
+                        joinPoint.getSignature().getName(),
+                        Arrays.toString(joinPoint.getArgs()))
+        );
     }
 }

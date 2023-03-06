@@ -13,9 +13,7 @@ public class MyCurrencyService {
 
     }
 
-    public void changeCurrency() {
-
-    }
+    public void changeCurrency() {}
 
     public void currencyLongName(CurrencyType currencyType) {
 
